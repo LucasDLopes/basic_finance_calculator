@@ -129,6 +129,22 @@ async function saveQuote(payload: { quoteName: string, data: ResultData }) {
       name: payload.quoteName,
     }
     await axios.post("/api/quotes", body)
+      .then(res => {
+        // Check if backend returned an error message in 200 (likely a match to another quote)
+        if (res.data?.error) {
+          alert(res.data.error)
+          return
+        }
+      })
+      .catch(err => {
+        // Axios throws for non-2xx responses
+        if (err.response?.data?.error) {
+          alert(err.response.data.error)
+        } else {
+          console.error("save error", err)
+        }
+      })
+
     await loadSaved()
   } catch (err) {
     console.error("save error", err)

@@ -16,8 +16,16 @@ export class QuotesStore {
   }
 
   add(entry: { input: QuoteInput; result: QuoteResult; name?: string }): SavedQuote {
+    // Check if the same input already exists
+    const exists = this.quotes.some(q =>
+      JSON.stringify(q.input) === JSON.stringify(entry.input)
+    );
+    if (exists) {
+      throw new Error("A quote with identical input already exists");
+    }
+
     const id = Math.random().toString(36).slice(2, 10);
-    const quoteName = entry.name || 'Untitled Quote';
+    const quoteName = entry.name || "Untitled Quote";
     const saved: SavedQuote = { id, input: entry.input, result: entry.result, quoteName };
     this.quotes.unshift(saved);
     return saved;
