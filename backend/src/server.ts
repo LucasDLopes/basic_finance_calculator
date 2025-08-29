@@ -2,7 +2,8 @@
 import express from 'express';
 import cors from 'cors';
 import { calcQuote } from './calc.js';
-import { QuotesStore } from './quotesStore.js';
+// import { QuotesStore } from './quotesStore.js'; //Local server storage
+import { QuotesStore } from './quotesStoreDB.js';
 
 const app = express();
 const port = process.env.PORT || 5175;
