@@ -40,4 +40,4 @@ When APR is `0%`, it falls back to `L / n`.
 Total interest = `payment * n - L`.
 
 ## Notes
-- Backend store is in-memory (resets when server restarts).
+- Backend was originall in-memory (resets when server restarts), but I have since added sql-lite integration Please be aware that this will involve the creation of the quotes.db file.
