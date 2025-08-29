@@ -93,6 +93,7 @@ watch(form, (nv) => {
   )
 }, { deep: true })
 
+/* Send server request for finance calculation and get back result. */
 async function apply(input?: InputState) {
   const payload = input ?? { ...form }
   try {
@@ -105,13 +106,14 @@ async function apply(input?: InputState) {
       payment: res.data.payment
     }
     lastAppliedInput.value = { ...payload }
-    appliedDirty.value = false // ✅ synced
+    appliedDirty.value = false // synced
   } catch (err) {
     console.error('calc error', err)
     result.value = null
   }
 }
 
+/* Pull quote data from server */
 async function loadSaved(){
   const res = await axios.get('/api/quotes')
   saved.value = res.data
@@ -153,6 +155,7 @@ async function saveQuote(payload: { quoteName: string, data: ResultData }) {
   }
 }
 
+/* Call to backend to delete specified quote */
 async function deleteQuote(id: string){
   try{
     await axios.delete('/api/quotes/' + id)
@@ -162,6 +165,7 @@ async function deleteQuote(id: string){
   }
 }
 
+/* pull up quote information on to components. */
 function viewQuote(item: any) {
   if (!item || !item.input) return
   form.value = { ...item.input }
